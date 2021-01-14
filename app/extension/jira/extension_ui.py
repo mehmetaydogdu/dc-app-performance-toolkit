@@ -13,13 +13,25 @@ def app_specific_action(webdriver, datasets):
         app_specific_issue = random.choice(datasets['custom_issues'])
         issue_key = app_specific_issue[0]
 
-    @print_timing("selenium_app_custom_action")
+    @print_timing("selenium_app_custom_action_issue_view")
     def measure():
 
         @print_timing("selenium_app_custom_action:view_issue")
         def sub_measure():
             page.go_to_url(f"{JIRA_SETTINGS.server_url}/browse/{issue_key}")
             page.wait_until_visible((By.ID, "summary-val"))  # Wait for summary field visible
-            page.wait_until_visible((By.ID, "ID_OF_YOUR_APP_SPECIFIC_UI_ELEMENT"))  # Wait for you app-specific UI element by ID selector
+            page.wait_until_visible((By.ID, "stf-issue-view"))  # Wait for you app-specific UI element by ID selector
+        sub_measure()
+    measure()
+
+def app_specific_action_report_page(webdriver, datasets):
+    page = BasePage(webdriver)
+    @print_timing("selenium_app_custom_action_report_page")
+    def measure():
+
+        @print_timing("selenium_app_custom_action:report_page")
+        def sub_measure():
+            page.go_to_url(f"{JIRA_SETTINGS.server_url}/plugins/servlet/bloompeak-stf/mainservlet/st-report")
+            page.wait_until_visible((By.ID, "search-button"))  # Wait for you app-specific UI element by ID selector
         sub_measure()
     measure()

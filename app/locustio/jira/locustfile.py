@@ -3,7 +3,7 @@ from locustio.jira.http_actions import login_and_view_dashboard, create_issue, s
     view_project_summary, view_dashboard, edit_issue, add_comment, browse_boards, view_kanban_board, view_scrum_board, \
     view_backlog, browse_projects
 from locustio.common_utils import LocustConfig, MyBaseTaskSet
-from extension.jira.extension_locust import app_specific_action
+from extension.jira.extension_locust import app_specific_action_report_page, app_specific_action_issue_view
 from util.conf import JIRA_SETTINGS
 
 config = LocustConfig(config_yml=JIRA_SETTINGS)
@@ -64,8 +64,12 @@ class JiraBehavior(MyBaseTaskSet):
         browse_boards(self)
 
     @task(config.percentage('standalone_extension'))  # By default disabled
-    def custom_action(self):
-        app_specific_action(self)
+    def custom_action_issue_view_iframe(self):
+        app_specific_action_issue_view(self)
+    
+    @task(config.percentage('standalone_extension_report_page'))  # By default disabled
+    def custom_action_report_page(self):
+        app_specific_action_report_page(self)
 
 
 class JiraUser(HttpUser):
