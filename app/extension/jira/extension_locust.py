@@ -10,13 +10,13 @@ logger = init_logger(app_type='jira')
 jira_dataset = jira_datasets()
 
 def fetch_static_content(locust):
-    locust.get('/download/resources/io.bloompeak.status-time-free:react-css/2.4fb28a4f.chunk.css', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.status-time-free:react-css/main.aea6ee88.chunk.css', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.status-time-free:react-js/2.e8c4c6a4.chunk.js', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.status-time-free:react-js/main.8a70e262.chunk.js', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.status-time-free:react-js/runtime-main.b43b082e.js', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.status-time-free:i18n/en.json', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.status-time-free:i18n/en-US.json', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.status-time:react-css/2.4fb28a4f.chunk.css', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.status-time:react-css/main.aea6ee88.chunk.css', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.status-time:react-js/2.e8c4c6a4.chunk.js', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.status-time:react-js/main.8a70e262.chunk.js', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.status-time:react-js/runtime-main.b43b082e.js', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.status-time:i18n/en.json', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.status-time:i18n/en-US.json', catch_response=True)
 
 @jira_measure
 def app_specific_action_report_page(locust):
@@ -34,10 +34,10 @@ def app_specific_action_report_page(locust):
         logger.error(f"{assertString} was not found in {content}")
     assert assertString in content  # assert specific string in response content
     
-    fetch_static_content(locust)
+    # fetch_static_content(locust)
     
     headers = {'content-type': 'application/json'}
-    calendarsResponse = locust.get('/rest/io.bloompeak.stf/1.0/calendars', headers=headers, catch_response=True).content.decode('utf-8')
+    calendarsResponse = locust.get('/rest/io.bloomp/1.0/calendars', headers=headers, catch_response=True).content.decode('utf-8')
     assertStringCalendar='workingIntervals'
     if assertStringCalendar not in calendarsResponse:
         logger.error(f"{assertStringCalendar} was not found in {calendarsResponse}")
@@ -75,9 +75,9 @@ def app_specific_action_issue_view(locust):
     headers = {'content-type': 'application/json'}
     locust.get(f"/plugins/servlet/bloompeak-st/mainservlet/st-issue-view?issueKey={issue_key}", catch_response=True)
     
-    fetch_static_content(locust)
+    # fetch_static_content(locust)
 
-    calendarsResponse = locust.get('/rest/io.bloompeak.stf/1.0/calendars', headers=headers, catch_response=True).content.decode('utf-8')
+    calendarsResponse = locust.get('/rest/io.bloompeak.st/1.0/calendars', headers=headers, catch_response=True).content.decode('utf-8')
     assertStringCalendar='workingIntervals'
     if assertStringCalendar not in calendarsResponse:
         logger.error(f"{assertStringCalendar} was not found in {calendarsResponse}")
