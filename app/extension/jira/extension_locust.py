@@ -37,7 +37,7 @@ def app_specific_action_report_page(locust):
     # fetch_static_content(locust)
     
     headers = {'content-type': 'application/json'}
-    calendarsResponse = locust.get('/rest/io.bloomp/1.0/calendars', headers=headers, catch_response=True).content.decode('utf-8')
+    calendarsResponse = locust.get('/rest/io.bloompeak.st/1.0/calendars', headers=headers, catch_response=True).content.decode('utf-8')
     assertStringCalendar='workingIntervals'
     if assertStringCalendar not in calendarsResponse:
         logger.error(f"{assertStringCalendar} was not found in {calendarsResponse}")
