@@ -20,7 +20,7 @@ def fetch_static_content(locust):
 
 @jira_measure
 def app_specific_action_report_page(locust):
-    r = locust.get('/plugins/servlet/bloompeak-stf/mainservlet/st-report', catch_response=True)  # call app-specific GET endpoint
+    r = locust.get('/plugins/servlet/bloompeak-st/mainservlet/st-report', catch_response=True)  # call app-specific GET endpoint
     content = r.content.decode('utf-8')   # decode response content
 
     # token_pattern_example = '"token":"(.+?)"'
@@ -73,7 +73,7 @@ def app_specific_action_report_page(locust):
 def app_specific_action_issue_view(locust):
     issue_key = random.choice(jira_dataset['issues'])[0]
     headers = {'content-type': 'application/json'}
-    locust.get(f"/plugins/servlet/bloompeak-stf/mainservlet/st-issue-view?issueKey={issue_key}", catch_response=True)
+    locust.get(f"/plugins/servlet/bloompeak-st/mainservlet/st-issue-view?issueKey={issue_key}", catch_response=True)
     
     fetch_static_content(locust)
 
