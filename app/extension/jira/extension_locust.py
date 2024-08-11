@@ -4,15 +4,15 @@ from locustio.common_utils import init_logger, jira_measure, run_as_specific_use
 logger = init_logger(app_type='jira')
 
 def fetch_static_content(locust):
-    locust.get('/download/resources/io.bloompeak.jira-reports-pro:react-css/main.cad863dd.css', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.jira-reports-pro:react-js/522.a6bc323f.chunk.js', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.jira-reports-pro:react-js/async-jql-editor.b78ab4f7.chunk.js', catch_response=True)
-    locust.get('/download/resources/io.bloompeak.jira-reports-pro:react-js/main.57671c25.js', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.jira-reports-free:react-css/main.c04f22d8.css', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.jira-reports-free:react-js/522.7077fd75.chunk.js', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.jira-reports-free:react-js/async-jql-editor.7dc90ef2.chunk.js', catch_response=True)
+    locust.get('/download/resources/io.bloompeak.jira-reports-free:react-js/main.fc6eb77c.js', catch_response=True)
 
 @jira_measure("locust_app_specific_action")
 # @run_as_specific_user(username='admin', password='admin')  # run as specific user
 def app_specific_action(locust):
-    content = locust.get('/plugins/servlet/bloompeak-jr/mainservlet/chart?dashboardId=10100&itemId=10100', headers={'content-type': 'text/html;charset=UTF-8'}, catch_response=True).content.decode('utf-8')
+    content = locust.get('/plugins/servlet/bloompeak-jr-free/mainservlet/chart?dashboardId=10100&itemId=10100', headers={'content-type': 'text/html;charset=UTF-8'}, catch_response=True).content.decode('utf-8')
     assertionString = 'bloompeak-jr-root'
     if assertionString not in content:
         logger.error(f"'{assertionString}' was not found in {content}")

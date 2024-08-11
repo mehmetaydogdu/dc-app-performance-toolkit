@@ -15,7 +15,7 @@ def app_specific_action(webdriver, datasets):
     def measure():
         @print_timing("selenium_app_custom_action:dashboard_page")
         def sub_measure():
-            page.go_to_url(f"{JIRA_SETTINGS.server_url}/plugins/servlet/bloompeak-jr/mainservlet/chart?dashboardId=10100&itemId=10100")
+            page.go_to_url(f"{JIRA_SETTINGS.server_url}/plugins/servlet/bloompeak-jr-free/mainservlet/chart?dashboardId=10100&itemId=10100")
             page.wait_until_visible((By.ID, "bloompeak-jr-root"))  # Wait for you app-specific UI element by ID selector
         sub_measure()
     measure()
