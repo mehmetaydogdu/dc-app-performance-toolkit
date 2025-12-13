@@ -5,28 +5,28 @@ logger = init_logger(app_type='jira')
 
 
 @jira_measure("locust_app_specific_action")
-# WebSudo is a feature that enhances security by requiring administrators to re-authenticate before
-# accessing administrative functions within Atlassian applications.
-# do_websudo=True requires user administrative rights, otherwise requests fail.
-#@run_as_specific_user(username='admin', password='admin', do_websudo=False)  # run as specific user
+# @run_as_specific_user(username='admin', password='admin')  # run as specific user
 def app_specific_action(locust):
-    r = locust.get('/app/get_endpoint', catch_response=True)  # call app-specific GET endpoint
+    r = locust.get('/plugins/servlet/bloompeak-stf/mainservlet/st-report', catch_response=True)  # call app-specific GET endpoint
     content = r.content.decode('utf-8')   # decode response content
+    assert '<div id="bloompeak-root" class="ac-content"></div>' in content
 
-    token_pattern_example = '"token":"(.+?)"'
-    id_pattern_example = '"id":"(.+?)"'
-    token = re.findall(token_pattern_example, content)  # get TOKEN from response using regexp
-    id = re.findall(id_pattern_example, content)    # get ID from response using regexp
+    r = locust.get('/download/resources/io.bloompeak.status-time-free:ui-i18n/en.json', catch_response=True)  # call app-specific GET endpoint
+    content = r.content.decode('utf-8')   # decode response content
+    assert '"Search": "Search",' in content
 
-    logger.locust_info(f'token: {token}, id: {id}')  # log info for debug when verbose is true in jira.yml file
-    if 'assertion string' not in content:
-        logger.error(f"'assertion string' was not found in {content}")
-    assert 'assertion string' in content  # assert specific string in response content
+    locust.get('/download/resources/io.bloompeak.status-time-free:ui-i18n/en-US.json', catch_response=False)
+    locust.get('/rest/api/2/myself', catch_response=False)
+    locust.get('/rest/api/2/field', catch_response=False)
+    locust.get('/rest/api/2/filter/favourite', catch_response=False)
+    locust.get('/rest/io.bloompeak.stf/1.0/status', catch_response=False)
+    locust.get('/rest/io.bloompeak.stf/1.0/calendars', catch_response=False)
+    locust.get('/rest/io.bloompeak.stf/1.0/reports', catch_response=False)
+    
+    locust.get('/download/resources/io.bloompeak.status-time-free:react-css/2.81e8548a.chunk.css', catch_response=False)
+    locust.get('/download/resources/io.bloompeak.status-time-free:react-css/main.afa36abd.chunk.css', catch_response=False)
 
-    body = {"id": id, "token": token}  # include parsed variables to POST request body
-    headers = {'content-type': 'application/json'}
-    r = locust.post('/app/post_endpoint', body, headers, catch_response=True)  # call app-specific POST endpoint
-    content = r.content.decode('utf-8')
-    if 'assertion string after successful POST request' not in content:
-        logger.error(f"'assertion string after successful POST request' was not found in {content}")
-    assert 'assertion string after successful POST request' in content  # assertion after POST request
+    locust.get('/download/resources/io.bloompeak.status-time-free:react-js/2.7bc545d9.chunk.js', catch_response=False)
+    locust.get('/download/resources/io.bloompeak.status-time-free:react-js/3.ff963ffd.chunk.js', catch_response=False)
+    locust.get('/download/resources/io.bloompeak.status-time-free:react-js/main.5f65c7c0.chunk.js', catch_response=False)
+    locust.get('/download/resources/io.bloompeak.status-time-free:react-js/runtime-main.b057ef5a.js', catch_response=False)
