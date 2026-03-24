@@ -19,7 +19,7 @@ def app_specific_action(webdriver, datasets):
         def sub_measure():
             page.go_to_url(f"{JIRA_SETTINGS.server_url}/browse/{issue_key}")
             page.wait_until_visible((By.ID, "summary-val"))  # Wait for summary field visible
-            page.wait_until_visible((By.ID, "bloompeak-stf-issue-detail-frame"))  # Wait for you app-specific UI element by ID selector
+            page.wait_until_visible((By.ID, "bloompeak-st-issue-detail-frame"))  # Wait for you app-specific UI element by ID selector
         sub_measure()
     measure()
 
@@ -30,8 +30,8 @@ def app_specific_action_report_page(webdriver, datasets):
 
         @print_timing("selenium_app_custom_action:report_page")
         def sub_measure():
-            page.go_to_url(f"{JIRA_SETTINGS.server_url}/plugins/servlet/bloompeak-stf/mainservlet/st-dashboard?dashboardItemId=10101&dashboardId=10100")
-            page.wait_until_visible((By.CSS_SELECTOR, '#bloompeak-table-result-10102'))  # Wait for you app-specific UI element by ID selector
+            page.go_to_url(f"{JIRA_SETTINGS.server_url}/plugins/servlet/bloompeak-st/mainservlet/st-dashboard?dashboardItemId=10100&dashboardId=10100")
+            page.wait_until_visible((By.CSS_SELECTOR, '#bloompeak-table-result-10100'))  # Wait for you app-specific UI element by ID selector
         sub_measure()
     measure()
 
